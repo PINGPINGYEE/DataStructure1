@@ -1,20 +1,20 @@
-﻿#define MAZE_SIZE 10
-#define MAX_STACK_SIZE 100
-
+// 구조체
+/*
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+#include <Windows.h>
 
-typedef struct {
-	short r;
-	short c;
-} element;
+#define MAX 10
+
+typedef int element;
 
 typedef struct {
 	int top;
-	element data[MAX_STACK_SIZE];
+	element data[MAX];
 } StackType;
 
-void init_stack(StackType* s) {
+void init(StackType* s) {
 	s->top = -1;
 }
 
@@ -23,98 +23,132 @@ int is_empty(StackType* s) {
 }
 
 int is_full(StackType* s) {
-	return (s->top == MAX_STACK_SIZE - 1);
+	return (s->top == MAX - 1);
 }
 
-void push(StackType* s, element item) {
+void push(StackType* s, int item) {
 	if (is_full(s)) {
-		fprintf(stderr, "Stack Full");
+		printf("Stack Full!\n");
 		return;
 	}
-	else {
-		s->data[++(s->top)] = item;
-	}
+	s->top++;
+	s->data[s->top] = item;
+	printf("push %d\n", item);
 }
 
 element pop(StackType* s) {
 	if (is_empty(s)) {
-		fprintf(stderr, "Stack Empty");
-		element err = { -1, -1 };
-		return err;
+		printf("Stack Empty!\n");
+		return 0;
 	}
-	else {
-		return (s->data[(s->top)--]);
-	}
+	element data = s->data[s->top];
+	s->top--;
+	printf("pop %d\n", data);
+	return data;
 }
 
-element here = { 1, 0 }, entry = { 1, 0 };
+int main() {
+	srand(time(NULL));
 
-char maze[MAZE_SIZE][MAZE_SIZE] = {
-{'1','1','1','1','1','1','1','1','1','1'},
-{'e','1','0','1','0','0','0','1','0','1'},
-{'0','0','0','1','0','0','0','1','0','1'},
-{'0','1','0','0','0','1','1','0','0','1'},
-{'1','0','0','0','1','0','0','0','0','1'},
-{'1','0','0','0','1','0','0','0','0','1'},
-{'1','0','0','0','0','0','1','0','1','1'},
-{'1','0','1','1','1','0','1','1','0','1'},
-{'1','1','0','0','0','0','0','0','0','x'},
-{'1','1','1','1','1','1','1','1','1','1'}
-};
+	printf("- - - - - Using struct - - - - -\n");
 
+	StackType s;
+	init(&s);
 
-void push_loc(StackType* s, int r, int c) {
-	if (r < 0 || c < 0) {
+	int rand_num, i;
+	for (i = 0; i < 30; i++)
+	{
+		rand_num = rand() % 100 + 1;
+		printf("[%d] ", i + 1);
+
+		if (rand_num % 2 == 0)
+		{
+			push(&s, rand_num);
+		}
+		else
+		{
+			pop(&s);
+		}
+	}
+	return 0;
+	system("pause");
+}
+*/
+
+//동적 할당
+/*
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <Windows.h>
+
+#define MAX 10
+
+typedef struct {
+	int top;
+	int* data;
+} StackType;
+
+typedef int element;
+
+void push(StackType* s, int item) {
+	if (is_full(s)) {
+		printf("Stack Full!\n");
 		return;
 	}
-	if (maze[r][c] != '1' && maze[r][c] != '.') {
-		element tmp;
-		tmp.r = r;
-		tmp.c = c;
-		push(s, tmp);
-	}
+	s->top++;
+	s->data[s->top] = item;
+	printf("push %d\n", item);
 }
 
-void maze_print(char maze[MAZE_SIZE][MAZE_SIZE]) {
-	printf("\n");
-	for (int r = 0; r < MAZE_SIZE; r++) {
-		for (int c = 0; c < MAZE_SIZE; c++) {
-			printf("%c", maze[r][c]);
-		}
-		printf("\n");
+element pop(StackType* s) {
+	if (is_empty(s)) {
+		printf("Stack Empty!\n");
+		return -1;
 	}
+	int data = s->data[s->top];
+	s->top--;
+	printf("pop %d\n", data);
+	return data;
 }
 
-int main(void) {
-	int cnt = 0;
-	int r, c, back_count = 0;
+void init(StackType* s) {
+	s->top = -1;
+	s->data = malloc(MAX * sizeof(element));
+}
+
+int is_empty(StackType* s) {
+	return (s->top == -1);
+}
+
+int is_full(StackType* s) {
+	return (s->top == MAX - 1);
+}
+
+int main() {
+	srand(time(NULL));
+
+	printf("- - - - - Using struct - - - - -\n");
+
 	StackType s;
+	init(&s);
 
-	init_stack(&s);
-	here = entry;
-	while (maze[here.r][here.c] != 'x') {
-		r = here.r;
-		c = here.c;
-		maze[r][c] = '.';
-		maze_print(maze);
-		printf("----------------\n");
-		push_loc(&s, r - 1, c);
-		push_loc(&s, r + 1, c);
-		push_loc(&s, r, c - 1);
-		push_loc(&s, r, c + 1);
-
-
-		if (is_empty(&s)) {
-			printf("Fail\n");
-			return 0;
+	int rand_num, i;
+	for (i = 0; i < 30; i++) {
+		rand_num = rand() % 100 + 1;
+		printf("[%d] ", i + 1);
+		if (rand_num % 2 == 0) {
+			push(&s, rand_num);
 		}
 		else {
-			here = pop(&s);
-			back_count += 1;
+			pop(&s);
 		}
 	}
-	printf("Success\n");
-	printf("Back count : %d\n", back_count);
+
+	free(s.data);
 
 	return 0;
+
+	system("pause");
 }
+*/
