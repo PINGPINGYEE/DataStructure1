@@ -86,16 +86,16 @@ int main() {
 	char ch[MAX_STACK_SIZE];
 	while (1)
 	{
-		printf("╧╝юз©╜ю╩ ют╥бго╪╪©Д : ");
+		printf("К╛╦Л·░Л≈╢Л²└ Л·┘К═╔М∙≤Л└╦Л ■ : ");
 		fgets(data, sizeof(data), stdin);
 
 		if (check(data)) {
-			printf("х╦╧╝ют╢о╢ы.\n");
+			printf("М ▄К╛╦Л·┘К▀┬К▀╓.\n");
 		}
 		else {
-			printf("х╦╧╝юл ╬ф╢у╢о╢ы.\n");
+			printf("М ▄К╛╦Л²╢ Л∙└К▀≥К▀┬К▀╓.\n");
 		}
-		printf("╟Х╪с ют╥б го╫ц╟з╫ю╢о╠Н?(Yes/No)\n");
+		printf("ЙЁ└Л├█ Л·┘К═╔ М∙≤Л▀°Й╡═Л┼╣К▀┬Й╧▄?(Yes/No)\n");
 		fgets(ch, sizeof(ch), stdin);
 		if (strcmp(ch, "Yes\n") == 0)
 			continue;
