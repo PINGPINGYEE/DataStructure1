@@ -14,10 +14,10 @@ typedef struct
     int row;
     int col;
     int NumElement;
-    Element* elements;
+    Element *elements;
 } SparseMatrix;
 
-SparseMatrix* transpose(SparseMatrix* matrix);
+SparseMatrix *transpose(SparseMatrix *matrix);
 
 int main()
 {
@@ -25,7 +25,7 @@ int main()
     printf("Enter the size of rows and colums, the number of non-zero terms: ");
     scanf_s("%d %d %d", &m, &n, &NumNonzero);
 
-    SparseMatrix* matrix = (SparseMatrix*)malloc(sizeof(SparseMatrix));
+    SparseMatrix *matrix = (SparseMatrix*)malloc(sizeof(SparseMatrix));
     matrix->row = m;
     matrix->col = n;
     matrix->NumElement = NumNonzero;
@@ -37,7 +37,7 @@ int main()
         scanf_s("%d %d %d", &(matrix->elements[i].row), &(matrix->elements[i].col), &(matrix->elements[i].val));
     }
 
-    SparseMatrix* transposed = transpose(matrix);
+    SparseMatrix *transposed = transpose(matrix);
 
     printf("The transposed of the matrix is:\n");
     for (int i = 0; i < transposed->NumElement; i++)
@@ -55,23 +55,23 @@ int main()
     return 0;
 }
 
-SparseMatrix* transpose(SparseMatrix* matrix)
+SparseMatrix *transpose(SparseMatrix* matrix)
 {
-    SparseMatrix* result = (SparseMatrix*)malloc(sizeof(SparseMatrix));
+    SparseMatrix *result = (SparseMatrix*)malloc(sizeof(SparseMatrix));
     result->row = matrix->col;
     result->col = matrix->row;
     result->NumElement = matrix->NumElement;
 
     result->elements = (Element*)malloc(result->NumElement * sizeof(Element));
 
-    int* NumElementsRow = (int*)calloc(matrix->col, sizeof(int));
+    int *NumElementsRow = (int*)calloc(matrix->col, sizeof(int));
 
     for (int i = 0; i < matrix->NumElement; i++)
     {
         NumElementsRow[matrix->elements[i].col]++;
     }
 
-    int* change = (int*)calloc(matrix->col, sizeof(int));
+    int *change = (int*)calloc(matrix->col, sizeof(int));
     change[0] = 0;
     for (int i = 1; i < matrix->col; i++)
     {
