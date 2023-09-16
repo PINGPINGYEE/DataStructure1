@@ -2,7 +2,7 @@
 
 int main()
 {
-
+	
 	int sum = 0;
 	int i = 2;
 	int j;
@@ -15,6 +15,7 @@ int main()
 			if (i % j == 0)
 			{
 				cnt += 1;
+				break;
 			}
 		}
 		if (cnt == 0)
