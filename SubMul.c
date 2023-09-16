@@ -17,7 +17,7 @@ void print_p(pn p);
 
 int main(void)
 {
-	printf("°á°ú È®ÀÎ Á¶°Ç 1\n");
+	printf("ê²°ê³¼ í™•ì¸ ì¡°ê±´ 1\n");
 	pn a1 = { 3, {4, 3, 2, 1} };
 	pn b1 = { 2, {3, 2, 8} };
 	pn d;
@@ -25,7 +25,7 @@ int main(void)
 	print_p(b1);
 	d = pn_mul(a1, b1);
 	print_p(d);
-	printf("°á°ú È®ÀÎ Á¶°Ç 2\n");
+	printf("ê²°ê³¼ í™•ì¸ ì¡°ê±´ 2\n");
 	pn a2 = { 6, {7, 0, 0, 5, 9, 0, 1} };
 	pn b2 = { 3, {5, 2, 1, 10} };
 	print_p(a2);
